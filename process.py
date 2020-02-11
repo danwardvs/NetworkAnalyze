@@ -45,7 +45,10 @@ def draw_graph(title,field,other_tolerance,make_other,main_bar,other_bar):
 
 
     if not main_bar:
-        main.plot.pie(autopct = make_autopct(main))
+        if make_other:
+            main.plot.pie(explode = explode, autopct = make_autopct(main))
+        else:  
+            main.plot.pie(autopct = make_autopct(main))
     else:
         plt.subplots(figsize=(8,6))
         main.plot.bar()
@@ -80,6 +83,7 @@ internet_header = pd.DataFrame(data['internet'],index=[0])
 
 
 df = pd.DataFrame(data["devices"])
+device_count = len(df)
 
 name = pd.DataFrame(network_header['name']).iloc[0]['name']
 date = pd.DataFrame(network_header['last_changed']).iloc[0]['last_changed']
@@ -91,7 +95,7 @@ city = pd.DataFrame(internet_header['city']).iloc[0]['city']
 region = pd.DataFrame(internet_header['region']).iloc[0]['region']
 
 
-print("Analysis of devices on network \"" + name +"\" on " + date + ".")
+print("Analysis of " + str(device_count) +" devices on network \"" + name +"\" on " + date + ".")
 print("Internet provided by "+ provider+" located in " + city +", " + region +".")
 
 
