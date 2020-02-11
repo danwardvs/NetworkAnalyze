@@ -16,12 +16,11 @@ def draw_graph(title,field,other_tolerance,make_other,main_bar,other_bar):
 
 
     makes = df[field].value_counts()
-    if make_other:
-        main = makes[makes > other_tolerance]
-        other = makes[makes<=other_tolerance]
+    
+    main = makes[makes > other_tolerance]
+    other = makes[makes<=other_tolerance]
+    if len(other) > 0:
         main = main.append(pd.Series([other.sum()],['Other']))
-    else:
-        main = makes
 
     if make_other:
         explode = []
@@ -67,6 +66,6 @@ header = pd.DataFrame(data['network'])
 df = pd.DataFrame(data["devices"])
 
 
-draw_graph("Manufacturers of Devices",'make',7,True,False,False)
-draw_graph("Types of Devices",'type',22,True,False,False)
-draw_graph("Models of Devices",'model',7,True,False,True)
+draw_graph("Manufacturers of Devices",'make',7,False,False,False)
+draw_graph("Types of Devices",'type',22,False,False,False)
+draw_graph("Models of Devices",'model',7,False,False,True)
